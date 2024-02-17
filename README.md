@@ -1,4 +1,4 @@
-<h1>SEM 4 PYTHON TUTORIAL</h1>
+<h1>SEM 4 PYTHON MINI-PROJECT</h1>
 <H2>Topic: Daily Planner</H2>
 
 <h3>MEMBERS:</h3>
