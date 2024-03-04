@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('planner.db')
+conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
 
@@ -9,9 +9,9 @@ def add_user(name, premium, age):
     conn.commit()
 
 
-def add_task(name, desc, start_time, end_time):
-    cur.execute("INSERT INTO TASK (name, desc, start_time, end_time) VALUES (?, ?, ?, ?)",
-                (name, desc, start_time, end_time))
+def add_task(task_id, name, desc, start_time, end_time):
+    cur.execute("INSERT INTO TASK (task_id, name, desc, start_time, end_time) VALUES (?, ?, ?, ?)",
+                (task_id, name, desc, start_time, end_time))
     conn.commit()
 
 
@@ -50,6 +50,25 @@ def get_user_id(name):
     user_id = cur.fetchone()[0]
     return user_id
 
+
+def clear_all_tasks():
+    cur.execute("DELETE FROM TASK")
+    conn.commit()
+    print("All tasks cleared successfully!")
+
+
+
+def clear_all_users():
+    cur.execute("DELETE FROM USER")
+    conn.commit()
+    print("All tasks cleared successfully!")
+
+
+
+def clear_all_create():
+    cur.execute("DELETE FROM CREATES")
+    conn.commit()
+    print("All tasks cleared successfully!")
 
 def main():
     while True:
@@ -103,10 +122,9 @@ def main():
                 assign_task(cur, user_id, cur.lastrowid)
                 print("Task created successfully!")
 
-            elif sub_choice == '2':
+            elif sub_choice == '2':  # display
                 display_tasks(user_id)
-
-            elif sub_choice == '3':
+            elif sub_choice == '3':  # update
                 task_id = int(input("Enter task ID to update: "))
                 name = input("Enter new task name (leave blank to keep current): ")
                 desc = input("Enter new task description (leave blank to keep current): ")
@@ -115,7 +133,7 @@ def main():
                 update_task(task_id, name, desc, start_time, end_time)
                 print("Task updated successfully!")
 
-            elif sub_choice == '4':
+            elif sub_choice == '4':  # delete
                 task_id = int(input("Enter task ID to delete: "))
                 delete_task(task_id)
                 print("Task deleted successfully!")

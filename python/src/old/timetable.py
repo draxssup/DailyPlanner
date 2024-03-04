@@ -13,6 +13,7 @@ def create_task(date, start_time, end_time, name, description):
         'description': description
     }
 
+
 def save_task(task):
     try:
         with open('timetable.json', 'r') as file:
@@ -24,6 +25,7 @@ def save_task(task):
 
     with open('timetable.json', 'w') as file:
         json.dump(timetable, file, indent=4)
+
 
 def view_timetable():
     try:
@@ -38,6 +40,7 @@ def view_timetable():
                 print("\n")
     except FileNotFoundError:
         print("Timetable is empty.")
+
 
 def main():
     while True:
@@ -63,6 +66,7 @@ def main():
             print("Invalid choice. Please try again.")
 
     print("Exiting program.")
+
 
 if __name__ == "__main__":
     main()
