@@ -69,7 +69,7 @@ def clear_all_users() -> None:
     print("All tasks cleared successfully!")
 
 
-def clear_all_create() -> None:
+def clear_all_assignments() -> None:
     cur.execute("DELETE FROM CREATES")
     conn.commit()
     print("All tasks cleared successfully!")
