@@ -24,13 +24,13 @@ A simple command-line daily planner application built using Python and SQLite. T
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/yourusername/daily-planner.git
+   git clone https://github.com/draxssup/DailyPlanner.git
    ```
 
 2. Navigate to the project directory:
 
    ```sh
-   cd daily-planner
+   cd DailyPlanner
    ```
 
 3. Create a virtual environment (optional but recommended):
