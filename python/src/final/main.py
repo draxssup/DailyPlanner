@@ -9,20 +9,20 @@ def add_user(name, premium, age):
     conn.commit()
 
 
-def add_task(task_id, name, desc, start_time, end_time):
-    cur.execute("INSERT INTO TASK (task_id, name, desc, start_time, end_time) VALUES (?, ?, ?, ?)",
-                (task_id, name, desc, start_time, end_time))
+def add_task(name, desc, start_time, end_time):
+    cur.execute("INSERT INTO TASK (name, desc, start_time, end_time) VALUES (?, ?, ?, ?)",
+                (name, desc, start_time, end_time))
     conn.commit()
 
 
-def assign_task(cur, user_id, task_id):
-    cur.execute("INSERT INTO CREATES (user_id, task_id) VALUES (?, ?)", (user_id, task_id))
+def assign_task(c, user_id, task_id):
+    c.execute("INSERT INTO CREATES (user_id, task_id) VALUES (?, ?)", (user_id, task_id))
 
 
 def display_tasks(user_id):
     cur.execute(
-        "SELECT TASK.name, TASK.desc, TASK.start_time, TASK.end_time FROM TASK INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ?",
-        (user_id,))
+        '''SELECT TASK.name, TASK.desc, TASK.start_time, TASK.end_time FROM TASK 
+        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ?''', (user_id,))
     rows = cur.fetchall()
     for row in rows:
         print(row)
@@ -51,11 +51,16 @@ def get_user_id(name):
     return user_id
 
 
+def get_task_id(name):
+    cur.execute("SELECT task_id FROM TASK WHERE name = ?", (name,))
+    task_id = cur.fetchone()[0]
+    return task_id
+
+
 def clear_all_tasks():
     cur.execute("DELETE FROM TASK")
     conn.commit()
     print("All tasks cleared successfully!")
-
 
 
 def clear_all_users():
@@ -64,11 +69,11 @@ def clear_all_users():
     print("All tasks cleared successfully!")
 
 
-
 def clear_all_create():
     cur.execute("DELETE FROM CREATES")
     conn.commit()
     print("All tasks cleared successfully!")
+
 
 def main():
     while True:
@@ -125,7 +130,8 @@ def main():
             elif sub_choice == '2':  # display
                 display_tasks(user_id)
             elif sub_choice == '3':  # update
-                task_id = int(input("Enter task ID to update: "))
+                task_name = input("Enter task name to update: ")
+                task_id = get_task_id(task_name)
                 name = input("Enter new task name (leave blank to keep current): ")
                 desc = input("Enter new task description (leave blank to keep current): ")
                 start_time = input("Enter new start time (YYYY-MM-DD HH:MM:SS, leave blank to keep current): ")
@@ -134,8 +140,8 @@ def main():
                 print("Task updated successfully!")
 
             elif sub_choice == '4':  # delete
-                task_id = int(input("Enter task ID to delete: "))
-                delete_task(task_id)
+                task_name = input("Enter name of the task to delete: ")
+                delete_task(get_task_id(task_name))
                 print("Task deleted successfully!")
 
             elif sub_choice == '5':
