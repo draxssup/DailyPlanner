@@ -1,55 +1,34 @@
 import sqlite3
 
-
-def connect_to_db():
-    conn = sqlite3.connect('planner.db')
-    return conn
-
-
-def close_connection(conn):
-    conn.close()
+conn = sqlite3.connect('planner.db')
+cur = conn.cursor()
 
 
 def add_user(name, premium, age):
-    conn = connect_to_db()
-    cur = conn.cursor()
     cur.execute("INSERT INTO USER (name, premium, age) VALUES (?, ?, ?)", (name, premium, age))
     conn.commit()
-    close_connection(conn)
 
 
 def add_task(name, desc, start_time, end_time):
-    conn = connect_to_db()
-    cur = conn.cursor()
     cur.execute("INSERT INTO TASK (name, desc, start_time, end_time) VALUES (?, ?, ?, ?)",
                 (name, desc, start_time, end_time))
     conn.commit()
-    close_connection(conn)
 
 
-def assign_task(user_id, task_id):
-    conn = connect_to_db()
-    cur = conn.cursor()
+def assign_task(cur, user_id, task_id):
     cur.execute("INSERT INTO CREATES (user_id, task_id) VALUES (?, ?)", (user_id, task_id))
-    conn.commit()
-    close_connection(conn)
 
 
 def display_tasks(user_id):
-    conn = connect_to_db()
-    cur = conn.cursor()
     cur.execute(
         "SELECT TASK.name, TASK.desc, TASK.start_time, TASK.end_time FROM TASK INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ?",
         (user_id,))
     rows = cur.fetchall()
     for row in rows:
         print(row)
-    close_connection(conn)
 
 
 def update_task(task_id, name=None, desc=None, start_time=None, end_time=None):
-    conn = connect_to_db()
-    cur = conn.cursor()
     if name:
         cur.execute("UPDATE TASK SET name = ? WHERE task_id = ?", (name, task_id))
     if desc:
@@ -59,23 +38,16 @@ def update_task(task_id, name=None, desc=None, start_time=None, end_time=None):
     if end_time:
         cur.execute("UPDATE TASK SET end_time = ? WHERE task_id = ?", (end_time, task_id))
     conn.commit()
-    close_connection(conn)
 
 
 def delete_task(task_id):
-    conn = connect_to_db()
-    cur = conn.cursor()
     cur.execute("DELETE FROM TASK WHERE task_id = ?", (task_id,))
     conn.commit()
-    close_connection(conn)
 
 
 def get_user_id(name):
-    conn = connect_to_db()
-    cur = conn.cursor()
     cur.execute("SELECT user_id FROM USER WHERE name = ?", (name,))
     user_id = cur.fetchone()[0]
-    close_connection(conn)
     return user_id
 
 
@@ -128,7 +100,7 @@ def main():
                 start_time = input("Enter start time (YYYY-MM-DD HH:MM:SS): ")
                 end_time = input("Enter end time (YYYY-MM-DD HH:MM:SS): ")
                 add_task(name, desc, start_time, end_time)
-                assign_task(user_id, cur.lastrowid)
+                assign_task(cur, user_id, cur.lastrowid)
                 print("Task created successfully!")
 
             elif sub_choice == '2':
@@ -153,6 +125,7 @@ def main():
 
             else:
                 print("Invalid choice. Please try again.")
+    conn.close()
 
 
 if __name__ == "__main__":
