@@ -17,6 +17,7 @@ def add_task(name:str , desc:str , start_time: str, end_time:str) -> None:
 
 def assign_task(user_id: int, task_id: int) -> None:
     cur.execute("INSERT INTO CREATES (user_id, task_id) VALUES (?, ?)", (user_id, task_id))
+    conn.commit()
 
 
 def display_tasks(user_id: int) -> None:
@@ -24,8 +25,10 @@ def display_tasks(user_id: int) -> None:
         '''SELECT TASK.name, TASK.desc, TASK.start_time, TASK.end_time FROM TASK 
         INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ?''', (user_id,))
     rows = cur.fetchall()
+    columns = [column[0] for column in cur.description]
     for row in rows:
-        print(row)
+        for i in range(len(row)):
+            print(f"{columns[i]}: {row[i]}")
 
 
 def update_task(task_id: int, name=None, desc=None, start_time=None, end_time=None):
@@ -114,7 +117,7 @@ def main() -> None:
             print("2. Display tasks")
             print("3. Update a task")
             print("4. Delete a task")
-            print("5. Exit")
+            print("5. Log Out")
 
             sub_choice = input("Enter your choice: ")
 
@@ -124,7 +127,7 @@ def main() -> None:
                 start_time = input("Enter start time (YYYY-MM-DD HH:MM:SS): ")
                 end_time = input("Enter end time (YYYY-MM-DD HH:MM:SS): ")
                 add_task(name, desc, start_time, end_time)
-                assign_task(cur, user_id, cur.lastrowid)
+                assign_task(user_id, cur.lastrowid)
                 print("Task created successfully!")
 
             elif sub_choice == '2':  # display
