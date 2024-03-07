@@ -8,6 +8,7 @@ from nltk.corpus import stopwords
 with open('intent.json') as file:
     intents = json.load(file)
 
+
 def process_user_input(user_input):
     tokens = word_tokenize(user_input.lower())
     stop_words = set(stopwords.words('english'))
