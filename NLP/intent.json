@@ -1,0 +1,34 @@
+{
+    "intents": [
+        {
+            "tag": "add_task",
+            "patterns": ["add a new task", "create a task", "add task", "new task"],
+            "responses": ["Sure, what is the task description?"]
+        },
+        {
+            "tag": "delete_task",
+            "patterns": ["delete task", "remove task", "cancel task", "erase task", "discard task"],
+            "responses": ["Which task would you like to delete?"]
+        },
+        {
+            "tag": "modify_task",
+            "patterns": ["modify task", "update task", "change task", "edit task"],
+            "responses": ["Which task would you like to modify?"]
+        },
+        {
+            "tag": "list_tasks",
+            "patterns": ["list tasks", "show tasks", "display tasks", "view tasks", "see tasks"],
+            "responses": ["Here are your tasks:"]
+        },
+        {
+            "tag": "complete_task",
+            "patterns": ["complete task", "finish task", "mark task as done", "done task"],
+            "responses": ["Which task have you completed?"]
+        },
+        {
+            "tag": "help",
+            "patterns": ["help", "what can you do", "how do I use this", "show help"],
+            "responses": ["I can help you manage your tasks. You can add, delete, modify, or list tasks."]
+        }
+    ]
+}
