@@ -50,7 +50,7 @@ def main() -> None:
                 start_time = input("Enter start time (YYYY-MM-DD HH:MM:SS): ")
                 end_time = input("Enter end time (YYYY-MM-DD HH:MM:SS): ")
                 f.add_task(name, desc, start_time, end_time)
-                f.assign_task(user_id, cur.lastrowid)
+                f.assign_task(user_id, f.cur.lastrowid)
                 print("Task created successfully!")
 
             elif sub_choice == '2':  # display
@@ -67,7 +67,7 @@ def main() -> None:
 
             elif sub_choice == '4':  # delete
                 task_name = input("Enter name of the task to delete: ")
-                f.delete_task(get_task_id(task_name))
+                f.delete_task(f.get_task_id(task_name))
                 print("Task deleted successfully!")
 
             elif sub_choice == '5':
