@@ -7,7 +7,7 @@
         },
         {
             "tag": "add_task",
-            "patterns": ["add a new task", "create a task", "add task", "new task", "create task"],
+            "patterns": ["add", "create", "new", "summon"],
             "responses": ["Sure, what is the task name?"]
         },
         {
@@ -17,22 +17,22 @@
         },
         {
             "tag": "modify_task",
-            "patterns": ["modify task", "update task", "change task", "edit task"],
+            "patterns": ["modify", "update", "change", "edit"],
             "responses": ["Which task would you like to modify?"]
         },
         {
             "tag": "list_tasks",
-            "patterns": ["list tasks", "show tasks", "display tasks", "view tasks", "see tasks"],
+            "patterns": ["list", "show", "display", "view", "see"],
             "responses": ["Here are your tasks:"]
         },
         {
             "tag": "complete_task",
-            "patterns": ["complete task", "finish task", "mark task as done", "done task"],
+            "patterns": ["complete", "finish", "done"],
             "responses": ["Which task have you completed?"]
         },
         {
             "tag": "help",
-            "patterns": ["help", "what can you do", "how do I use this", "show help"],
+            "patterns": ["help", "what can you do", "how do I use this", "help"],
             "responses": ["I can help you manage your tasks. You can add, delete, modify, or list tasks."]
         }
     ]

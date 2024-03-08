@@ -47,9 +47,8 @@ def main() -> None:
             if sub_choice == '1':
                 name = input("Enter task name: ")
                 desc = input("Enter task description: ")
-                start_time = input("Enter start time (YYYY-MM-DD HH:MM:SS): ")
-                end_time = input("Enter end time (YYYY-MM-DD HH:MM:SS): ")
-                f.add_task(name, desc, start_time, end_time)
+                date = input("Enter Date")
+                f.add_task(name, desc, date)
                 f.assign_task(user_id, f.cur.lastrowid)
                 print("Task created successfully!")
 
@@ -60,9 +59,8 @@ def main() -> None:
                 task_id = f.get_task_id(task_name)
                 name = input("Enter new task name (leave blank to keep current): ")
                 desc = input("Enter new task description (leave blank to keep current): ")
-                start_time = input("Enter new start time (YYYY-MM-DD HH:MM:SS, leave blank to keep current): ")
-                end_time = input("Enter new end time (YYYY-MM-DD HH:MM:SS, leave blank to keep current): ")
-                f.update_task(task_id, name, desc, start_time, end_time)
+                date = input("Enter new Date (leave blank to keep current)")
+                f.update_task(task_id, name, desc, date)
                 print("Task updated successfully!")
 
             elif sub_choice == '4':  # delete

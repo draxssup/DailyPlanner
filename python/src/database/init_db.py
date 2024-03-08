@@ -23,8 +23,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS TASK (
                task_id INTEGER PRIMARY KEY,
                name VARCHAR(255),
                desc TEXT,
-               start_time DATETIME,
-               end_time DATETIME)''')
+               date DATETIME)''')
 
 # Commit the transaction and close the connection
 conn.commit()

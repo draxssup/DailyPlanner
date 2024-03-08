@@ -1,4 +1,5 @@
 import json
+import random
 import sqlite3
 
 from nltk.tokenize import word_tokenize
@@ -33,12 +34,16 @@ while True:
         break
     intent = process_user_input(user_input)
 
-    if intent['tag'] == 'add_task':
+    if intent and intent['tag'] == 'add_task':
         a.create_task(a.f.get_user_id(user_name))
 
-    elif intent['tag'] == 'delete_task':
+    elif intent and intent['tag'] == 'delete_task':
         a.delete_task()
-    elif intent['tag'] == 'modify_task':
-        print("User wants to modify a task")
+    elif intent and intent['tag'] == 'modify_task':
+        a.update_task()
+    elif intent and intent['tag'] == 'greetings':
+        print(random.choice(intent['responses']))
+    elif intent and intent['tag'] == 'list_tasks':
+        a.display_tasks(a.f.get_user_id(user_name))
     else:
         print("Please be more specific")
