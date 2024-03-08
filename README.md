@@ -52,7 +52,7 @@ A simple command-line daily planner application built using Python and SQLite. T
 1. Run the application:
 
    ```sh
-   python src/main.py
+   python src/final/main.py
    ```
 
 2. Follow the on-screen instructions to create a new user or continue with an existing user, and manage tasks accordingly.
