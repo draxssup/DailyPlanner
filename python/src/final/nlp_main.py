@@ -5,6 +5,7 @@ import sqlite3
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from DailyPlanner.python.src.final import alt_main as a
+
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 # Load intents from intents.json
@@ -25,11 +26,12 @@ def process_user_input(user_input):
     return None
 
 
-# Example usage
-user_name: str = a.greet()
-print(user_name)
+user_name = None
+print("Welcome to my Daily planner")
+while user_name is None:
+    user_name: str = a.greet()
 while True:
-    user_input = input("user > ")
+    user_input = input(f"{user_name} > ")
     if user_input == 'exit':
         break
     intent = process_user_input(user_input)
@@ -45,5 +47,7 @@ while True:
         print(random.choice(intent['responses']))
     elif intent and intent['tag'] == 'list_tasks':
         a.display_tasks(a.f.get_user_id(user_name))
+    elif intent and intent['tag'] == 'help':
+        print(random.choice(intent['responses']))
     else:
         print("Please be more specific")

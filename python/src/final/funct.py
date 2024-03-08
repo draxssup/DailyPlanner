@@ -1,4 +1,5 @@
 import sqlite3
+import re
 
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
@@ -32,6 +33,11 @@ def display_tasks(user_id: int) -> None:
         for i in range(len(row)):
             print(f"{columns[i]}: {row[i]}")
         print()
+
+
+def is_valid_date(input_string):
+    pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])$"
+    return re.match(pattern, input_string) is not None
 
 
 def update_task(task_id: int, name=None, desc=None, date=None):

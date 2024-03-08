@@ -2,10 +2,10 @@ from DailyPlanner.python.src.final import funct as f
 
 
 def greet():
-    c = int(input("Welcome to my Daily planner\nEnter 1. to login\nEnter 2. to signup: "))
-    if c == 1:
+    c = input("Would you like to Login or signup\nuser > ")
+    if c.lower() == 'login':
         return login_user()
-    elif c == 2:
+    elif c.lower() == 'signup':
         return create_user()
     else:
         print("Try again later")
@@ -33,7 +33,10 @@ def login_user():
 def create_task(user_id):
     name = input("Enter task name: ")
     desc = input("Enter task description: ")
-    date = input("Enter Date : ")
+    date = input("Enter Date (DD/MM): ")
+    while not f.is_valid_date(date):
+        print("Wrong format try again")
+        date = input("Enter Date (DD/MM):")
     f.add_task(name, desc, date)
     f.assign_task(user_id, f.cur.lastrowid)
     print("Task created successfully!")
