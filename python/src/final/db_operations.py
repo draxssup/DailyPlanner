@@ -1,5 +1,6 @@
 import sqlite3
 import re
+import matplotlib.pyplot as plt
 
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
@@ -11,8 +12,8 @@ def add_user(name: str, premium: str, age: int) -> None:
 
 
 def add_task(name: str, desc: str, date: str) -> None:
-    cur.execute("INSERT INTO TASK (name, desc, date) VALUES (?, ?, ?)",
-                (name, desc, date))
+    cur.execute("INSERT INTO TASK (name, desc, date, status) VALUES (?, ?, ?, ?)",
+                (name, desc, date, "ongoing"))
     conn.commit()
 
 
@@ -24,15 +25,47 @@ def assign_task(user_id: int, task_id: int) -> None:
 def display_tasks(user_id: int) -> None:
     cur.execute(
         '''SELECT TASK.name, TASK.desc, TASK.date FROM TASK 
-        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ?''', (user_id,))
+        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ? and TASK.status not in ('completed')''', (user_id,))
     rows = cur.fetchall()
     columns = [column[0] for column in cur.description]
     print(f"Total {len(rows)} tasks:")
-    for index, row in enumerate(rows,start=1):
-        print(f"Task {index}")
+    for index, row in enumerate(rows, start=1):
+        print(f"Task {index}:")
         for i in range(len(row)):
             print(f"{columns[i]}: {row[i]}")
         print()
+
+
+def plot_progress(user_id):
+    # Query the database to get the cumulative sum of completed tasks for each date for the specified user_id
+    cur.execute('''
+        SELECT TASK.date, SUM(1) OVER (ORDER BY TASK.date) as cum_num_tasks_completed
+        FROM TASK
+        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id
+        WHERE TASK.status = 'completed' AND CREATES.user_id = ?
+        GROUP BY TASK.date
+        ORDER BY TASK.date
+    ''', (user_id,))
+    rows = cur.fetchall()
+
+    # Extract dates and cumulative number of tasks completed
+    dates = [row[0] for row in rows]
+    cum_num_tasks_completed = [row[1] for row in rows]
+
+    # Plotting
+    plt.figure(figsize=(12, 6))
+    plt.bar(dates, cum_num_tasks_completed, color='skyblue')
+    plt.xlabel('Date')
+    plt.ylabel('Cumulative Number of Tasks Completed')
+    plt.title(f'Cumulative Tasks Completed Over Time for User {user_id}')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+
+    # Save the plot as an image file
+    plt.savefig(f'cumulative_tasks_completed_plot_user_{user_id}.png')
+
+    # Show the plot
+    plt.show()
 
 
 def is_valid_date(input_string):
@@ -40,14 +73,15 @@ def is_valid_date(input_string):
     return re.match(pattern, input_string) is not None
 
 
-def update_task(task_id: int, name=None, desc=None, date=None):
+def update_task(task_id: int, name=None, desc=None, date=None, status=None):
     if name:
         cur.execute("UPDATE TASK SET name = ? WHERE task_id = ?", (name, task_id))
     if desc:
         cur.execute("UPDATE TASK SET desc = ? WHERE task_id = ?", (desc, task_id))
     if date:
         cur.execute("UPDATE TASK SET date = ? WHERE task_id = ?", (date, task_id))
-
+    if status:
+        cur.execute("UPDATE TASK SET status = ? WHERE task_id = ?", (status, task_id))
     conn.commit()
 
 

@@ -1,4 +1,4 @@
-from DailyPlanner.python.src.final import funct as f
+from DailyPlanner.python.src import db_operations as f
 
 
 def greet():
@@ -60,3 +60,14 @@ def delete_task():
     task_name = input("Enter name of the task to delete: ")
     f.delete_task(f.get_task_id(task_name))
     print("Task deleted successfully!")
+
+
+def complete_task():
+    task_name = input("Enter name of the completed task: ")
+    f.cur.execute('SELECT name FROM TASK WHERE name = ?', (task_name,))
+    result = f.cur.fetchone()
+    if result is None:
+        print("Task not found. Please try again.")
+    else:
+        task_id = f.get_task_id(task_name)
+        f.update_task(task_id, status='completed')

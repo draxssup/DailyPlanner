@@ -4,7 +4,7 @@ import sqlite3
 
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from DailyPlanner.python.src.final import alt_main as a
+import alt_main as a
 
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
@@ -38,16 +38,19 @@ while True:
 
     if intent and intent['tag'] == 'add_task':
         a.create_task(a.f.get_user_id(user_name))
-
     elif intent and intent['tag'] == 'delete_task':
         a.delete_task()
     elif intent and intent['tag'] == 'modify_task':
         a.update_task()
+    elif intent and intent['tag'] == 'complete_task':
+        a.complete_task()
     elif intent and intent['tag'] == 'greetings':
         print(random.choice(intent['responses']))
     elif intent and intent['tag'] == 'list_tasks':
         a.display_tasks(a.f.get_user_id(user_name))
     elif intent and intent['tag'] == 'help':
         print(random.choice(intent['responses']))
+    # elif intent and intent['tag'] == 'status':
+    #     a.f.plot_progress(a.f.get_user_id(user_name))
     else:
         print("Please be more specific")
