@@ -1,6 +1,11 @@
 {
     "intents": [
         {
+            "tag": "gratitude",
+            "patterns": ["thank you", "thanks", "thnx"],
+            "responses": ["Always here for your help"]
+        },
+        {
             "tag": "greetings",
             "patterns": ["hi", "hello", "hey", "howdy", "good morning", "good afternoon", "good evening"],
             "responses": ["Hello! How can I help you?", "Hi there! What can I do for you?", "Hey! Need any assistance?"]

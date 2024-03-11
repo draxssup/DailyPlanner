@@ -1,12 +1,12 @@
 import json
 import random
 import sqlite3
-
+import database.db_start as db
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import alt_main as a
-
-conn = sqlite3.connect('../database/planner.db')
+import database.db_start
+conn = sqlite3.connect('database/planner.db')
 cur = conn.cursor()
 # Load intents from intents.json
 with open('../../NLP/intent.json') as file:
@@ -30,9 +30,10 @@ user_name = None
 print("Welcome to my Daily planner")
 while user_name is None:
     user_name: str = a.greet()
+
 while True:
     user_input = input(f"{user_name} > ")
-    if user_input == 'exit':
+    if user_input == 'bye':
         break
     intent = process_user_input(user_input)
 
@@ -50,7 +51,9 @@ while True:
         a.display_tasks(a.f.get_user_id(user_name))
     elif intent and intent['tag'] == 'help':
         print(random.choice(intent['responses']))
-    # elif intent and intent['tag'] == 'status':
-    #     a.f.plot_progress(a.f.get_user_id(user_name))
+    elif intent and intent['tag'] == 'gratitude':
+        print(random.choice(intent['responses']))
+    elif intent and intent['tag'] == 'database_restart':
+        db.new_db()
     else:
         print("Please be more specific")

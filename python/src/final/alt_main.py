@@ -1,18 +1,28 @@
-from DailyPlanner.python.src import db_operations as f
+from datetime import datetime, timedelta
+
+import db_operations as f
 
 
 def greet():
     c = input("Would you like to Login or signup\nuser > ")
     if c.lower() == 'login':
-        return login_user()
+        d = login_user()
+        if d == "-1":
+            greet()
+        return d
     elif c.lower() == 'signup':
-        return create_user()
+        d = create_user()
+        if d == "-1":
+            greet()
+        return d
     else:
         print("Try again later")
 
 
 def create_user():
     name = input("Enter new user's name: ")
+    if name == 'exit':
+        return "-1"
     premium = input("Is the user premium (yes/no): ")
     age = int(input("Enter user's age: "))
     f.add_user(name, premium, age)
@@ -23,17 +33,26 @@ def create_user():
 def login_user():
     user_name = input("Enter user's name: ")
     user_id = f.get_user_id(user_name)
-    if user_id is not None:
-        print(f"Hello {user_name}!")
-        return user_name
-    else:
+    while user_id is None:
+        if user_name == 'exit':
+            return "-1"
         print("User not found. Please try again.")
+        user_name = input("Enter user's name: ")
+        user_id = f.get_user_id(user_name)
+    print(f"Hello {user_name}!")
+    return user_name
 
 
 def create_task(user_id):
     name = input("Enter task name: ")
     desc = input("Enter task description: ")
     date = input("Enter Date (DD/MM): ")
+    if date.lower() == "today":
+        today = datetime.now()
+        date = today.strftime("%d/%m")
+    elif date.lower() == "tomorrow":
+        tomorrow = datetime.today() + timedelta(days=1)
+        date = tomorrow.strftime("%d/%m")
     while not f.is_valid_date(date):
         print("Wrong format try again")
         date = input("Enter Date (DD/MM):")
@@ -71,3 +90,4 @@ def complete_task():
     else:
         task_id = f.get_task_id(task_name)
         f.update_task(task_id, status='completed')
+        print(f"Congratulations on completing {task_name}")

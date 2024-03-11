@@ -2,7 +2,7 @@ import sqlite3
 import re
 import matplotlib.pyplot as plt
 
-conn = sqlite3.connect('../database/planner.db')
+conn = sqlite3.connect('database/planner.db')
 cur = conn.cursor()
 
 
@@ -36,38 +36,6 @@ def display_tasks(user_id: int) -> None:
         print()
 
 
-def plot_progress(user_id):
-    # Query the database to get the cumulative sum of completed tasks for each date for the specified user_id
-    cur.execute('''
-        SELECT TASK.date, SUM(1) OVER (ORDER BY TASK.date) as cum_num_tasks_completed
-        FROM TASK
-        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id
-        WHERE TASK.status = 'completed' AND CREATES.user_id = ?
-        GROUP BY TASK.date
-        ORDER BY TASK.date
-    ''', (user_id,))
-    rows = cur.fetchall()
-
-    # Extract dates and cumulative number of tasks completed
-    dates = [row[0] for row in rows]
-    cum_num_tasks_completed = [row[1] for row in rows]
-
-    # Plotting
-    plt.figure(figsize=(12, 6))
-    plt.bar(dates, cum_num_tasks_completed, color='skyblue')
-    plt.xlabel('Date')
-    plt.ylabel('Cumulative Number of Tasks Completed')
-    plt.title(f'Cumulative Tasks Completed Over Time for User {user_id}')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-
-    # Save the plot as an image file
-    plt.savefig(f'cumulative_tasks_completed_plot_user_{user_id}.png')
-
-    # Show the plot
-    plt.show()
-
-
 def is_valid_date(input_string):
     pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])$"
     return re.match(pattern, input_string) is not None
@@ -92,7 +60,10 @@ def delete_task(task_id: int) -> None:
 
 def get_user_id(name: str) -> int:
     cur.execute("SELECT user_id FROM USER WHERE name = ?", (name,))
-    user_id = cur.fetchone()[0]
+    try:
+        user_id = cur.fetchone()[0]
+    except Exception as e:
+        user_id = None
     return user_id
 
 
