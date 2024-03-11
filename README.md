@@ -5,6 +5,7 @@ A simple command-line daily planner application built using Python and SQLite. T
 
 ## Features
 
+- NLP in progress
 - Create a new user
 - Continue with an existing user
 - Create a new task
