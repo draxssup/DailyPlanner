@@ -1,4 +1,4 @@
-import db_operations as f
+from DailyPlanner.python.src.final import db_operations as f
 import alt_main as a
 
 

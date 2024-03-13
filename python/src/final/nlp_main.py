@@ -1,14 +1,9 @@
 import json
 import random
 import sqlite3
-import database.db_start as db
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import alt_main as a
-import database.db_start
-conn = sqlite3.connect('database/planner.db')
-cur = conn.cursor()
-# Load intents from intents.json
 with open('../../NLP/intent.json') as file:
     intents = json.load(file)
 
@@ -53,7 +48,5 @@ while True:
         print(random.choice(intent['responses']))
     elif intent and intent['tag'] == 'gratitude':
         print(random.choice(intent['responses']))
-    elif intent and intent['tag'] == 'database_restart':
-        db.new_db()
     else:
         print("Please be more specific")

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import db_operations as f
+import DailyPlanner.python.src.final.db_operations as f
 
 
 def greet():

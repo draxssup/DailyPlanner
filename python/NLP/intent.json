@@ -27,7 +27,7 @@
         },
         {
             "tag": "list_tasks",
-            "patterns": ["list", "show", "display", "view", "see"],
+            "patterns": ["list", "show", "display", "view", "see","what task"],
             "responses": ["Here are your tasks:"]
         },
         {

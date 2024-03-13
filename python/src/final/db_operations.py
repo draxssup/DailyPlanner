@@ -2,7 +2,7 @@ import sqlite3
 import re
 import matplotlib.pyplot as plt
 
-conn = sqlite3.connect('database/planner.db')
+conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
 
