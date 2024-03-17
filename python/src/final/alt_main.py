@@ -25,7 +25,7 @@ def create_user():
         return "-1"
     premium = input("Is the user premium (yes/no): ")
     age = int(input("Enter user's age: "))
-    f.add_user(name, premium, age)
+    f.add_user(name, age, premium)
     print("User created successfully!")
     return name
 

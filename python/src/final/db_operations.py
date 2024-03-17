@@ -6,7 +6,7 @@ conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
 
-def add_user(name: str, premium: str, age: int) -> None:
+def add_user(name: str, age, premium='no',) -> None:
     cur.execute("INSERT INTO USER (name, premium, age) VALUES (?, ?, ?)", (name, premium, age))
     conn.commit()
 
