@@ -24,8 +24,8 @@ def create_user():
     if name == 'exit':
         return "-1"
     premium = input("Is the user premium (yes/no): ")
-    age = int(input("Enter user's age: "))
-    f.add_user(name, age, premium)
+    password = int(input("Enter password: "))
+    f.add_user(name, password, premium)
     print("User created successfully!")
     return name
 

@@ -1,13 +1,13 @@
 import sqlite3
 import re
 import matplotlib.pyplot as plt
-
+import DailyPlanner.python.src.database.init_db
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
 
-def add_user(name: str, age, premium='no',) -> None:
-    cur.execute("INSERT INTO USER (name, premium, age) VALUES (?, ?, ?)", (name, premium, age))
+def add_user(name: str, password, premium='no',) -> None:
+    cur.execute("INSERT INTO USER (name, premium, password) VALUES (?, ?, ?)", (name, premium, password))
     conn.commit()
 
 

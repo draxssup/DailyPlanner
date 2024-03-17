@@ -47,11 +47,13 @@ def create_create_layer(event=None):
         # Insert the new task and assign it to the user
         f.add_task(name, desc, date)
         task_id = f.get_task_id(name)
-        f.assign_task(user_id, task_id)
-
-        # Display updated tasks
-        vfm.insert('1.0', f.display_tasks(user_id=user_id))
-        print('done')
+        try:
+            f.assign_task(user_id, task_id)
+        finally:
+            print()
+            vfm.delete('1.0', tk.END)
+            vfm.insert('1.0', f.display_tasks(user_id=user_id))
+            create_layer.destroy()
 
     create_layer = tk.Toplevel(root)
     create_layer.title('Create New Task')
@@ -90,6 +92,14 @@ def create_create_layer(event=None):
 
 # ============================================================
 def create_delete_layer(event=None):
+    def delete_task(task_name):
+        # Process the task deletion (e.g., remove from database)
+        f.delete_task(f.get_task_id(task_name))
+        user_id = f.get_user_id(username)
+        vfm.delete(1.0, tk.END)
+        vfm.insert(1.0, f.display_tasks(user_id=user_id))
+        delete_layer.destroy()
+
     delete_layer = tk.Toplevel(root)
     delete_layer.title('Complete Task')
     delete_layer.geometry('1200x800')
@@ -108,14 +118,6 @@ def create_delete_layer(event=None):
     delete_button = tk.Button(delete_layer, text='Complete Task', font=('Arial', 24),
                               command=lambda: delete_task(task_name_entry.get()))
     delete_button.grid(row=1, column=0, columnspan=2)
-
-
-def delete_task(task_name):
-    # Process the task deletion (e.g., remove from database)
-    f.delete_task(f.get_task_id(task_name))
-    user_id = f.get_user_id(username)
-    vfm.delete(1.0, tk.END)
-    vfm.insert(1.0, f.display_tasks(user_id=user_id))
 
 
 # ============================================================
@@ -139,11 +141,17 @@ def create_edit_layer(event=None):
         # Update the task details
         task_id = f.get_task_id(task_name)
         if task_id:
-            f.update_task(task_id, new_name, new_desc, new_date)
+            if new_name:
+                f.update_task(task_id, name=new_name)
+            if new_desc:
+                f.update_task(task_id, desc=new_desc)
+            if new_date:
+                f.update_task(task_id, date=new_date)
 
         # Display updated tasks
         vfm.insert('1.0', f.display_tasks(user_id=user_id))
         print('Edit done')
+        edit_layer.destroy()
 
     edit_layer = tk.Toplevel(root)
     edit_layer.title('Edit Task')

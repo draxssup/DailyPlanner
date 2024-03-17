@@ -1,6 +1,5 @@
 import sqlite3
 
-# Connect to the database (or create it if it doesn't exist)
 conn = sqlite3.connect('planner.db')
 cur = conn.cursor()
 
@@ -9,7 +8,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS USER (
                user_id INTEGER PRIMARY KEY,
                name VARCHAR(10),
                premium VARCHAR(3) CHECK (premium IN ('yes', 'no')),
-               age INTEGER)''')
+               password VARCHAR(10))''')  # Removed the comma at the end
 
 # Create CREATES table
 cur.execute('''CREATE TABLE IF NOT EXISTS CREATES (
@@ -27,8 +26,5 @@ cur.execute('''CREATE TABLE IF NOT EXISTS TASK (
                date DATETIME,
                status VARCHAR(15))''')
 
-# Commit the transaction and close the connection
 conn.commit()
 conn.close()
-
-
