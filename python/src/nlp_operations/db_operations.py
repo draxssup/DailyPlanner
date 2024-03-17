@@ -1,7 +1,5 @@
 import sqlite3
 import re
-import matplotlib.pyplot as plt
-import DailyPlanner.python.src.database.init_db
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
