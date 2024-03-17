@@ -6,6 +6,7 @@ A simple command-line daily planner application built using Python and SQLite. T
 ## Features
 
 - NLP in progress
+- GUI ready
 - Create a new user
 - Continue with an existing user
 - Create a new task
@@ -53,7 +54,7 @@ A simple command-line daily planner application built using Python and SQLite. T
 1. Run the application:
 
    ```sh
-   python src/nlp_operations/main.py
+   python src/nlp_operations/nlp_main.py
    ```
 
 2. Follow the on-screen instructions to create a new user or continue with an existing user, and manage tasks accordingly.
