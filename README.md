@@ -56,6 +56,10 @@ A simple daily planner application built using Python and SQLite. The applicatio
    ```sh
    python src/nlp_operations/nlp_main.py
    ```
+   or for GUI:
 
+   ```sh
+   python src/gui/gui_main.py
+   ```
 2. Follow the on-screen instructions to create a new user or continue with an existing user, and manage tasks accordingly.
 
