@@ -1,4 +1,3 @@
-import os
 import tkinter as tk
 import sqlite3
 import DailyPlanner.python.src.nlp_operations.db_operations as f
@@ -10,7 +9,7 @@ user_name = None
 def open_login_window():
     login_window = tk.Toplevel(root)
     login_window.title("Login")
-    login_window.geometry('200x200')
+    login_window.geometry('1200x800')
 
     # Function to check username and password
     def check_login():
@@ -34,16 +33,18 @@ def open_login_window():
         # Close the database connection
         conn.close()
 
-    username_label = tk.Label(login_window, text="Username:", font=('Arial', 18))
-    username_label.pack()
-    username_entry = tk.Entry(login_window, font=('Arial', 18))
-    username_entry.pack()
-    password_label = tk.Label(login_window, text="Password:", font=('Arial', 18))
-    password_label.pack()
-    password_entry = tk.Entry(login_window, show="*", font=('Arial', 18))
-    password_entry.pack()
-    login_button = tk.Button(login_window, text="Login", font=('Arial', 18), command=check_login)
-    login_button.pack(fill='x')
+    login_window.columnconfigure(0, weight=4)
+    login_window.columnconfigure(1, weight=6)
+    login_window.rowconfigure(0, weight=1)
+    login_window.rowconfigure(1, weight=1)
+    login_window.rowconfigure(2, weight=1)
+    tk.Label(login_window, text="Username:", font=('Arial', 24)).grid(row=0, column=0, sticky='e')
+    username_entry = tk.Entry(login_window, font=('Arial', 24))
+    username_entry.grid(row=0, column=1, sticky='w')
+    tk.Label(login_window, text="Password:", font=('Arial', 24)).grid(row=1, column=0, sticky='e')
+    password_entry = tk.Entry(login_window, show="*", font=('Arial', 24))
+    password_entry.grid(row=1, column=1, sticky='w')
+    tk.Button(login_window, text="Login", font=('Arial', 24), command=check_login).grid(row=2, column=1, sticky='nw')
 
 
 def get_username():
@@ -53,39 +54,48 @@ def get_username():
 
 def open_signup_window():
     signup_window = tk.Toplevel(root)
-    signup_window.geometry('300x300')
+    signup_window.geometry('1200x800')
     signup_window.title('Signup')
 
     def do_signup():
         age = agetb.get()
         if not age.isnumeric():
-            tk.Label(signup_window, text='Try Again', font=('Arial', 12), fg='red').grid(row=2, column=0)
+            tk.Label(signup_window, text='Try Again', font=('Arial', 18), fg='red').grid(row=2, column=0, sticky='ne',
+                                                                                         padx=25)
 
         name = nametb.get()
         f.add_user(name, age, 'yes')
-        tk.Label(signup_window, text='Successful', font=('Arial', 12), fg='green').grid(row=2, column=0)
+        tk.Label(signup_window, text='Successful', font=('Arial', 18), fg='green').grid(row=2, column=0, sticky='ne',
+                                                                                        padx=25)
         signup_window.after(500, signup_window.destroy())
 
     signup_window.columnconfigure(0, weight=1)
-    signup_window.columnconfigure(1, weight=9)
+    signup_window.columnconfigure(1, weight=1)
     signup_window.rowconfigure(0, weight=1)
     signup_window.rowconfigure(1, weight=1)
-    tk.Label(signup_window, text='Name', font=('Arial', 18)).grid(pady=10, row=0, column=0, sticky='nw')
-    tk.Label(signup_window, text='Age', font=('Arial', 18)).grid(row=1, column=0, sticky='nw')
-    nametb = tk.Entry(signup_window, width=20, font=('Arial', 18))
-    nametb.grid(pady=10, row=0, column=1, sticky='new')
-    agetb = tk.Entry(signup_window, width=20, font=('Arial', 18))
-    agetb.grid(row=1, column=1, sticky='new')
-    submit_button = tk.Button(signup_window, text='submit', font=('Arial', 18), command=do_signup)
-    submit_button.grid(sticky='news', row=2, column=1)
+    signup_window.rowconfigure(2, weight=1)
+    tk.Label(signup_window, text='Name', font=('Arial', 24)).grid(row=0, column=0, sticky='se')
+    tk.Label(signup_window, text='Age', font=('Arial', 24)).grid(row=1, column=0, sticky='ne')
+    nametb = tk.Entry(signup_window, width=20, font=('Arial', 24))
+    nametb.grid(pady=10, row=0, column=1, sticky='sw', padx=25)
+    agetb = tk.Entry(signup_window, width=20, font=('Arial', 24))
+    agetb.grid(row=1, column=1, sticky='nw', padx=25)
+    submit_button = tk.Button(signup_window, text='submit', font=('Arial', 24), command=do_signup)
+    submit_button.grid(row=2, column=1, sticky='nw')
 
 
 root = tk.Tk()
-root.geometry('500x500')
+root.geometry('1200x800')
 root.title("Daily Planner")
-loginbut = tk.Button(root, text='LOGIN', font=('Arial', 18), command=open_login_window)
-loginbut.pack(pady=25, fill='x')
-signupbut = tk.Button(root, text='SIGNUP', font=('Arial', 18), command=open_signup_window)
-signupbut.pack(fill='x')
+root.rowconfigure(0, weight=1)
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+root.rowconfigure(1, weight=1)
+tk.Label(text='Welcome to Daily Planner\nHere you can create your tasks and manage them.', font=('Arial', 32)).grid(
+    row=0, column=0, columnspan=2)
+loginbut = tk.Button(root, text='LOGIN', font=('Arial', 24), command=open_login_window)
+loginbut.grid(row=1, column=0)
+signupbut = tk.Button(root, text='SIGNUP', font=('Arial', 24), command=open_signup_window)
+signupbut.grid(row=1, column=1)
 
 root.mainloop()
