@@ -1,14 +1,13 @@
 # SEM 4 PYTHON MINI-PROJECT
 # Daily Planner
 
-A simple command-line daily planner application built using Python and SQLite. The application allows users to create tasks, display tasks, update tasks, and delete tasks.
+A simple daily planner application built using Python and SQLite. The application allows users to create tasks, display tasks, update tasks, and delete tasks using GUI or CLI.
 
 ## Features
 
-- NLP in progress
-- GUI ready
-- Create a new user
-- Continue with an existing user
+- CLI availability
+- GUI availability
+- Multi-User Database using SQLite3
 - Create a new task
 - Display tasks
 - Update a task
@@ -20,7 +19,8 @@ A simple command-line daily planner application built using Python and SQLite. T
 
 - Python 3.x
 - SQLite3
-
+- Tkinter
+- nltk
 ### Installation
 
 1. Clone the repository:
