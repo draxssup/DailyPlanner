@@ -22,19 +22,20 @@ def assign_task(user_id: int, task_id: int) -> None:
     conn.commit()
 
 
-def display_tasks(user_id: int) -> None:
+def display_tasks(user_id: int) -> str:
     cur.execute(
         '''SELECT TASK.name, TASK.desc, TASK.date FROM TASK 
         INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ? and TASK.status not in ('completed')''', (user_id,))
     rows = cur.fetchall()
     columns = [column[0] for column in cur.description]
-    print(f"Total {len(rows)} tasks:")
+    str_task = ''
+    str_task += f"Total {len(rows)} tasks:\n"
     for index, row in enumerate(rows, start=1):
-        print(f"Task {index}:")
+        str_task += '\n'
+        str_task += f"Task {index}:\n"
         for i in range(len(row)):
-            print(f"{columns[i]}: {row[i]}")
-        print()
-
+            str_task += f"{columns[i]}: {row[i]}\n"
+    return str_task
 
 def is_valid_date(input_string):
     pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])$"

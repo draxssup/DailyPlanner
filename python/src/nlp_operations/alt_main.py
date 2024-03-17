@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import DailyPlanner.python.src.final.db_operations as f
+import DailyPlanner.python.src.nlp_operations.db_operations as f
 
 
 def greet():
@@ -62,7 +62,7 @@ def create_task(user_id):
 
 
 def display_tasks(user_id):
-    f.display_tasks(user_id)
+    return f.display_tasks(user_id)
 
 
 def update_task():

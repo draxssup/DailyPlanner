@@ -14,7 +14,8 @@ cur.execute('''CREATE TABLE IF NOT EXISTS USER (
 # Create CREATES table
 cur.execute('''CREATE TABLE IF NOT EXISTS CREATES (
                user_id INTEGER,
-               task_id INTEGER PRIMARY KEY,
+               task_id INTEGER,
+               PRIMARY KEY (user_id, task_id),
                FOREIGN KEY (user_id) REFERENCES USER(user_id),
                FOREIGN KEY (task_id) REFERENCES TASK(task_id))''')
 

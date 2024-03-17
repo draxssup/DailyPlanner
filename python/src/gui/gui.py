@@ -54,7 +54,7 @@ def send_func(event=None):
 
 
 if __name__ == "__main__":
-    import DailyPlanner.python.src.final.nlp_main as nm
+    import DailyPlanner.python.src.nlp_operations.nlp_main as nm
 
 root = tk.Tk()
 font = ('Arial', 18)

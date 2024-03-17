@@ -1,7 +1,7 @@
 import os
 import tkinter as tk
 import sqlite3
-import DailyPlanner.python.src.final.db_operations as f
+import DailyPlanner.python.src.nlp_operations.db_operations as f
 
 global user_name
 user_name = None
@@ -27,6 +27,7 @@ def open_login_window():
         if result:
             print("Login successful")
             login_window.destroy()
+            root.destroy()
         else:
             print("Login failed")
 
@@ -63,7 +64,7 @@ def open_signup_window():
         name = nametb.get()
         f.add_user(name, age, 'yes')
         tk.Label(signup_window, text='Successful', font=('Arial', 12), fg='green').grid(row=2, column=0)
-        signup_window.after(50000, signup_window.destroy())
+        signup_window.after(500, signup_window.destroy())
 
     signup_window.columnconfigure(0, weight=1)
     signup_window.columnconfigure(1, weight=9)
