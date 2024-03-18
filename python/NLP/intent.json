@@ -46,11 +46,6 @@
             "responses": [
                 "I can help you manage your tasks. You can add, delete, modify, or list tasks."
             ]
-        },
-        {
-            "tag": "status",
-            "patterns": ["status", " how many", "progress", "report", "review"],
-            "responses": ["Your monthly review:"]
         }
     ]
 }

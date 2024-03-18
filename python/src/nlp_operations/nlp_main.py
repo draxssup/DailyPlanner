@@ -8,20 +8,20 @@ with open('../../NLP/intent.json') as file:
     intents = json.load(file)
 
 
-def process_user_input(user_input):
-    tokens = word_tokenize(user_input.lower())
+def process_user_input(usr_input):
+    tokens = word_tokenize(usr_input.lower())
     stop_words = set(stopwords.words('english'))
     tokens = [word for word in tokens if word.isalnum() and word not in stop_words]
 
-    for intent in intents['intents']:
-        for pattern in intent['patterns']:
+    for each in intents['intents']:
+        for pattern in each['patterns']:
             if all(token in tokens for token in word_tokenize(pattern.lower())):
-                return intent
+                return each
 
     return None
 
 
-user_name = None
+user_name = ''
 print("Welcome to my Daily planner")
 while user_name is None:
     user_name: str = a.greet()

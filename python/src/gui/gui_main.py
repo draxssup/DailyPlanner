@@ -32,7 +32,7 @@ view_frame.grid(row=0, column=0, sticky='news')
 
 # ============================================================
 
-def create_create_layer(event=None):
+def create_create_layer():
     def submit_task():
         # Process the task creation (e.g., add to database)
         print('command working')
@@ -91,7 +91,7 @@ def create_create_layer(event=None):
 # DELETE BUTTON'S SLAVE LAYER TOPLEVEL + ROOT
 
 # ============================================================
-def create_delete_layer(event=None):
+def create_delete_layer():
     def delete_task(task_name):
         # Process the task deletion (e.g., remove from database)
         f.delete_task(f.get_task_id(task_name))
@@ -115,9 +115,9 @@ def create_delete_layer(event=None):
     task_name_entry.grid(row=0, column=1, sticky='w')
 
     # Button to Delete
-    delete_button = tk.Button(delete_layer, text='Complete Task', font=('Arial', 24),
-                              command=lambda: delete_task(task_name_entry.get()))
-    delete_button.grid(row=1, column=0, columnspan=2)
+    del_button = tk.Button(delete_layer, text='Complete Task', font=('Arial', 24),
+                           command=lambda: delete_task(task_name_entry.get()))
+    del_button.grid(row=1, column=0, columnspan=2)
 
 
 # ============================================================
@@ -125,7 +125,7 @@ def create_delete_layer(event=None):
 # EDIT BUTTON'S SLAVE LAYER TOPLEVEL + ROOT
 
 # ============================================================
-def create_edit_layer(event=None):
+def create_edit_layer():
     def submit_edit():
         # Process the task edit (e.g., update database)
         print('Edit command working')

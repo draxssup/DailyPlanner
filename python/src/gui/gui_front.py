@@ -3,7 +3,6 @@ import sqlite3
 import DailyPlanner.python.src.nlp_operations.db_operations as f
 
 global user_name
-user_name = None
 
 
 def open_login_window():
@@ -22,7 +21,7 @@ def open_login_window():
         c = conn.cursor()
 
         # Check if username and password match
-        c.execute("SELECT * FROM user WHERE name=? and password = ?", (user_name,password))
+        c.execute("SELECT * FROM user WHERE name=? and password = ?", (user_name, password))
         result = c.fetchone()
         if result:
             print("Login successful")
@@ -65,7 +64,7 @@ def open_signup_window():
                                                                                          padx=25)
 
         name = nametb.get()
-        f.add_user(name, password, 'yes')
+        f.add_user(name, password)
         tk.Label(signup_window, text='Successful', font=('Arial', 18), fg='green').grid(row=2, column=0, sticky='ne',
                                                                                         padx=25)
         signup_window.after(500, signup_window.destroy())

@@ -1,11 +1,12 @@
 import sqlite3
 import re
+
 conn = sqlite3.connect('../database/planner.db')
 cur = conn.cursor()
 
 
-def add_user(name: str, password, premium='no',) -> None:
-    cur.execute("INSERT INTO USER (name, premium, password) VALUES (?, ?, ?)", (name, premium, password))
+def add_user(name: str, password) -> None:
+    cur.execute("INSERT INTO USER (name, password) VALUES (?, ?)", (name, password))
     conn.commit()
 
 
@@ -23,7 +24,8 @@ def assign_task(user_id: int, task_id: int) -> None:
 def display_tasks(user_id: int) -> str:
     cur.execute(
         '''SELECT TASK.name, TASK.desc, TASK.date FROM TASK 
-        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ? and TASK.status not in ('completed')''', (user_id,))
+        INNER JOIN CREATES ON TASK.task_id = CREATES.task_id WHERE CREATES.user_id = ? 
+        and TASK.status not in ('completed')''', (user_id,))
     rows = cur.fetchall()
     columns = [column[0] for column in cur.description]
     str_task = ''
@@ -34,6 +36,7 @@ def display_tasks(user_id: int) -> str:
         for i in range(len(row)):
             str_task += f"{columns[i]}: {row[i]}\n"
     return str_task
+
 
 def is_valid_date(input_string):
     pattern = r"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])$"
@@ -61,7 +64,7 @@ def get_user_id(name: str) -> int:
     cur.execute("SELECT user_id FROM USER WHERE name = ?", (name,))
     try:
         user_id = cur.fetchone()[0]
-    except Exception as e:
+    except Exception:
         user_id = None
     return user_id
 
