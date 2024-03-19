@@ -58,12 +58,12 @@ def open_signup_window():
     signup_window.title('Signup')
 
     def do_signup():
-        password = passwordtb.get()
+        password = password_text.get()
         if not password.isnumeric():
             tk.Label(signup_window, text='Try Again', font=('Arial', 18), fg='red').grid(row=2, column=0, sticky='ne',
                                                                                          padx=25)
 
-        name = nametb.get()
+        name = name_text.get()
         f.add_user(name, password)
         tk.Label(signup_window, text='Successful', font=('Arial', 18), fg='green').grid(row=2, column=0, sticky='ne',
                                                                                         padx=25)
@@ -76,10 +76,10 @@ def open_signup_window():
     signup_window.rowconfigure(2, weight=1)
     tk.Label(signup_window, text='Name', font=('Arial', 24)).grid(row=0, column=0, sticky='se')
     tk.Label(signup_window, text='password', font=('Arial', 24)).grid(row=1, column=0, sticky='ne')
-    nametb = tk.Entry(signup_window, width=20, font=('Arial', 24))
-    nametb.grid(pady=10, row=0, column=1, sticky='sw', padx=25)
-    passwordtb = tk.Entry(signup_window, show='*', width=20, font=('Arial', 24))
-    passwordtb.grid(row=1, column=1, sticky='nw', padx=25)
+    name_text = tk.Entry(signup_window, width=20, font=('Arial', 24))
+    name_text.grid(pady=10, row=0, column=1, sticky='sw', padx=25)
+    password_text = tk.Entry(signup_window, show='*', width=20, font=('Arial', 24))
+    password_text.grid(row=1, column=1, sticky='nw', padx=25)
     submit_button = tk.Button(signup_window, text='submit', font=('Arial', 24), command=do_signup)
     submit_button.grid(row=2, column=1, sticky='nw')
 
@@ -93,9 +93,9 @@ root.columnconfigure(1, weight=1)
 root.rowconfigure(1, weight=1)
 tk.Label(text='Welcome to Daily Planner\nHere you can create your tasks and manage them.', font=('Arial', 32)).grid(
     row=0, column=0, columnspan=2)
-loginbut = tk.Button(root, text='LOGIN', font=('Arial', 24), command=open_login_window)
-loginbut.grid(row=1, column=0)
-signupbut = tk.Button(root, text='SIGNUP', font=('Arial', 24), command=open_signup_window)
-signupbut.grid(row=1, column=1)
+login_button = tk.Button(root, text='LOGIN', font=('Arial', 24), command=open_login_window)
+login_button.grid(row=1, column=0)
+signup_button = tk.Button(root, text='SIGNUP', font=('Arial', 24), command=open_signup_window)
+signup_button.grid(row=1, column=1)
 
 root.mainloop()
